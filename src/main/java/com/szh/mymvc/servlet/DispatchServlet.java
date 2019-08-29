@@ -25,7 +25,6 @@ import com.szh.mymvc.annotation.MyController;
 import com.szh.mymvc.annotation.MyRequestMapping;
 import com.szh.mymvc.annotation.MyRequestParam;
 import com.szh.mymvc.annotation.MyService;
-import com.szh.mymvc.controller.TestController;
 
 public class DispatchServlet extends HttpServlet {
 
@@ -35,7 +34,7 @@ public class DispatchServlet extends HttpServlet {
 	// <load-on-startup>0</load-on-startup>
 	// 0：Tomcat初始化(springmvc会创建各种bean到Map,装配autowire等)
 	public void init(ServletConfig config) {
-		//扫描工程所有类com.szh.mymvc.controller.TestController Class<?>
+		// 扫描工程所有类com.szh.mymvc.controller.TestController Class<?>
 		doScan("com.szh");
 		// 实例化beans
 		doInstance();
@@ -44,7 +43,7 @@ public class DispatchServlet extends HttpServlet {
 		// 处理路径映射,根据url定位方法
 		urlMapping();
 	}
-	
+
 	public void urlMapping() {
 		for (Map.Entry<String, Object> entry : beans.entrySet()) {
 			Object instance = entry.getValue();
@@ -159,12 +158,12 @@ public class DispatchServlet extends HttpServlet {
 		String contextPath = req.getContextPath(); 
 		String url = uri.replace(contextPath, ""); // /ctr1/query
 		// method.invoke(obj, args); 反射调用方法
-		TestController tc = (TestController) beans.get("/" + url.split("/")[1]);
-		
+		// TestController tc = (TestController) beans.get("/" + url.split("/")[1]);
+		Object bean = beans.get("/" + url.split("/")[1]);
 		Method method = methods.get(url);
 		Object args[] = handle(req, resp, method);
 		try {
-			method.invoke(tc, args);
+			method.invoke(bean, args);
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (IllegalArgumentException e) {

@@ -18,6 +18,9 @@ public class TestController {
 	@MyAutowired("TestServiceImpl")
 	private TestService testService;
 
+	/**
+	 * http://localhost:8080/mymvc/ctr1/query?name=szh&age=24
+	 */
 	@MyRequestMapping("/query")
 	public void query(HttpServletRequest req, HttpServletResponse resp, @MyRequestParam("name") String name,
 			@MyRequestParam("age") String age) {
@@ -30,7 +33,10 @@ public class TestController {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/**
+	 * http://localhost:8080/mymvc/ctr1/test
+	 */
 	@MyRequestMapping("/test")
 	public void test(HttpServletRequest req, HttpServletResponse resp) {
 		PrintWriter pw;
